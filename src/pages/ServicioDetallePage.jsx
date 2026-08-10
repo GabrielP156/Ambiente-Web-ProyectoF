@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { obtenerServicio, cambiarEstadoServicio } from "../services/servicioService";
 import { Badge } from "../components/Badge";
 import { Button } from "../components/Button";
+import { Alert } from "../components/Alert";
 
 export function ServicioDetallePage() {
   const { id } = useParams();
@@ -11,6 +12,8 @@ export function ServicioDetallePage() {
   const [servicio, setServicio] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [accionError, setAccionError] = useState(null);
+  const [exito, setExito] = useState(null);
   const [cambiando, setCambiando] = useState(false);
 
   useEffect(() => {
@@ -22,11 +25,14 @@ export function ServicioDetallePage() {
 
   async function handleCambiarEstado() {
     setCambiando(true);
+    setAccionError(null);
+    setExito(null);
     try {
       const actualizado = await cambiarEstadoServicio(id, !servicio.activo);
       setServicio(actualizado);
+      setExito(actualizado.activo ? "Juego activado correctamente" : "Juego desactivado correctamente");
     } catch (err) {
-      setError(err.message);
+      setAccionError(err.message);
     } finally {
       setCambiando(false);
     }
@@ -63,6 +69,9 @@ export function ServicioDetallePage() {
           </Badge>
         </p>
       </div>
+
+      {accionError && <Alert type="danger">{accionError}</Alert>}
+      {exito && <Alert type="success">{exito}</Alert>}
 
       <div className="flex gap-3 mt-4">
         <Link to={`/servicios/${servicio.id}/editar`}>

@@ -4,6 +4,8 @@ import { useAuth } from "../context/AuthContext";
 import { CampoPassword } from "../components/CampoPassword";
 import { Button } from "../components/Button";
 import { AuthCard } from "../components/AuthCard";
+import { Label } from "../components/Label";
+import { Alert } from "../components/Alert";
 
 export function LoginPage() {
   const { login } = useAuth();
@@ -33,7 +35,7 @@ export function LoginPage() {
     <AuthCard title="Iniciar sesión" subtitle="Accede a tu zona de juego">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Correo</label>
+          <Label required>Correo</Label>
           <input
             type="email"
             value={correo}
@@ -45,7 +47,7 @@ export function LoginPage() {
         </div>
 
         <div>
-          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Contraseña</label>
+          <Label required>Contraseña</Label>
           <CampoPassword
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -53,7 +55,7 @@ export function LoginPage() {
           />
         </div>
 
-        {error && <p className="text-danger text-sm">{error}</p>}
+        {error && <Alert type="danger">{error}</Alert>}
 
         <Button type="submit" disabled={enviando}>
           {enviando ? "Ingresando..." : "Ingresar"}

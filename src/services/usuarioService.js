@@ -11,3 +11,8 @@ export function registrarCliente(datos) {
 export function obtenerPerfil() {
   return get("/usuarios/perfil");
 }
+
+export function listarUsuarios(rol) {
+  const query = rol ? `?rol=${rol}` : "";
+  return get(`/usuarios${query}`);
+}

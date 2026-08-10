@@ -20,6 +20,10 @@ async function request(path, options = {}) {
   const json = await res.json();
 
   if (!res.ok) {
+    if (json.validationErrors?.length) {
+      const mensajes = json.validationErrors.map((e) => e.message).join(" | ");
+      throw new Error(mensajes);
+    }
     throw new Error(json.message || "Ocurrió un error en la solicitud");
   }
 

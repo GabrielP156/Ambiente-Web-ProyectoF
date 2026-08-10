@@ -9,7 +9,7 @@ export function Button({ children, variant = "primary", className = "", ...props
 
   return (
     <button
-      className={`rounded px-3 py-2 text-sm uppercase tracking-wide disabled:opacity-50 transition ${estilos[variant]} ${className}`}
+      className={`font-display rounded px-3 py-2 text-sm uppercase tracking-wide disabled:opacity-50 transition hover:-translate-y-0.5 ${estilos[variant]} ${className}`}
       {...props}
     >
       {children}
