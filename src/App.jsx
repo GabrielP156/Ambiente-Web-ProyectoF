@@ -9,6 +9,11 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { ServiciosListPage } from "./pages/ServiciosListPage";
 import { ServicioDetallePage } from "./pages/ServicioDetallePage";
 import { ServicioFormPage } from "./pages/ServicioFormPage";
+import { EmpleadosListPage } from "./pages/EmpleadosListPage";
+import { EmpleadoDetallePage } from "./pages/EmpleadoDetallePage";
+import { EmpleadoFormPage } from "./pages/EmpleadoFormPage";
+import { RestriccionesListPage } from "./pages/RestriccionesListPage";
+import { RestriccionDetallePage } from "./pages/RestriccionDetallePage";
 
 export default function App() {
   return (
@@ -40,6 +45,54 @@ export default function App() {
           element={
             <RutaProtegida rolesPermitidos={["Administrador"]}>
               <ServicioFormPage />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/empleados"
+          element={
+            <RutaProtegida rolesPermitidos={["Administrador", "Empleado"]}>
+              <EmpleadosListPage />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/empleados/:id"
+          element={
+            <RutaProtegida rolesPermitidos={["Administrador", "Empleado"]}>
+              <EmpleadoDetallePage />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/empleados/nuevo"
+          element={
+            <RutaProtegida rolesPermitidos={["Administrador"]}>
+              <EmpleadoFormPage />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/empleados/:id/editar"
+          element={
+            <RutaProtegida rolesPermitidos={["Administrador"]}>
+              <EmpleadoFormPage />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/restricciones"
+          element={
+            <RutaProtegida rolesPermitidos={["Administrador", "Empleado"]}>
+              <RestriccionesListPage />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/restricciones/:id"
+          element={
+            <RutaProtegida rolesPermitidos={["Administrador", "Empleado"]}>
+              <RestriccionDetallePage />
             </RutaProtegida>
           }
         />

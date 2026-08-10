@@ -4,6 +4,8 @@ import { registrarCliente } from "../services/usuarioService";
 import { CampoPassword } from "../components/CampoPassword";
 import { Button } from "../components/Button";
 import { AuthCard } from "../components/AuthCard";
+import { Label } from "../components/Label";
+import { Alert } from "../components/Alert";
 
 const datosIniciales = {
   nombre: "",
@@ -18,6 +20,7 @@ export function RegistroPage() {
   const navigate = useNavigate();
   const [datos, setDatos] = useState(datosIniciales);
   const [error, setError] = useState(null);
+  const [exito, setExito] = useState(null);
   const [enviando, setEnviando] = useState(false);
 
   function handleChange(e) {
@@ -28,6 +31,7 @@ export function RegistroPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
+    setExito(null);
     setEnviando(true);
 
     try {
@@ -39,7 +43,8 @@ export function RegistroPage() {
         telefono: datos.telefono || undefined,
         password: datos.password,
       });
-      navigate("/login");
+      setExito("Cuenta creada correctamente, ya podés iniciar sesión");
+      setTimeout(() => navigate("/login"), 1200);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -51,7 +56,7 @@ export function RegistroPage() {
     <AuthCard title="Registro" subtitle="Crea tu cuenta de cliente">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Nombre</label>
+          <Label required>Nombre</Label>
           <input
             name="nombre"
             value={datos.nombre}
@@ -63,7 +68,7 @@ export function RegistroPage() {
         </div>
 
         <div>
-          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Primer apellido</label>
+          <Label required>Primer apellido</Label>
           <input
             name="primerApellido"
             value={datos.primerApellido}
@@ -75,7 +80,7 @@ export function RegistroPage() {
         </div>
 
         <div>
-          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Segundo apellido</label>
+          <Label>Segundo apellido</Label>
           <input
             name="segundoApellido"
             value={datos.segundoApellido}
@@ -85,7 +90,7 @@ export function RegistroPage() {
         </div>
 
         <div>
-          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Correo</label>
+          <Label required>Correo</Label>
           <input
             type="email"
             name="correo"
@@ -97,7 +102,7 @@ export function RegistroPage() {
         </div>
 
         <div>
-          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Teléfono</label>
+          <Label>Teléfono</Label>
           <input
             name="telefono"
             value={datos.telefono}
@@ -107,7 +112,7 @@ export function RegistroPage() {
         </div>
 
         <div>
-          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Contraseña</label>
+          <Label required>Contraseña</Label>
           <CampoPassword
             name="password"
             value={datos.password}
@@ -115,9 +120,13 @@ export function RegistroPage() {
             required
             minLength={8}
           />
+          <p className="text-xs text-muted mt-1">
+            Mínimo 8 caracteres, con mayúscula, minúscula y número.
+          </p>
         </div>
 
-        {error && <p className="text-danger text-sm">{error}</p>}
+        {error && <Alert type="danger">{error}</Alert>}
+        {exito && <Alert type="success">{exito}</Alert>}
 
         <Button type="submit" disabled={enviando}>
           {enviando ? "Registrando..." : "Registrarme"}

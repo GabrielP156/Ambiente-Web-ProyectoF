@@ -7,6 +7,8 @@ import {
   obtenerServicio,
 } from "../services/servicioService";
 import { Button } from "../components/Button";
+import { Label } from "../components/Label";
+import { Alert } from "../components/Alert";
 
 const datosIniciales = {
   nombre: "",
@@ -25,6 +27,7 @@ export function ServicioFormPage() {
   const [imagenActual, setImagenActual] = useState(null);
   const [especialidades, setEspecialidades] = useState([]);
   const [error, setError] = useState(null);
+  const [exito, setExito] = useState(null);
   const [enviando, setEnviando] = useState(false);
 
   useEffect(() => {
@@ -56,6 +59,7 @@ export function ServicioFormPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
+    setExito(null);
     setEnviando(true);
 
     const payload = {
@@ -72,7 +76,8 @@ export function ServicioFormPage() {
       } else {
         await crearServicio(payload);
       }
-      navigate("/servicios");
+      setExito(esEdicion ? "Juego actualizado correctamente" : "Juego creado correctamente");
+      setTimeout(() => navigate("/servicios"), 1000);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -88,7 +93,7 @@ export function ServicioFormPage() {
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <div>
-          <label className="block text-sm mb-1">Nombre</label>
+          <Label required>Nombre</Label>
           <input
             name="nombre"
             value={datos.nombre}
@@ -100,7 +105,7 @@ export function ServicioFormPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Descripción</label>
+          <Label required>Descripción</Label>
           <textarea
             name="descripcion"
             value={datos.descripcion}
@@ -112,7 +117,7 @@ export function ServicioFormPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Precio base (por hora)</label>
+          <Label required>Precio base (por hora)</Label>
           <input
             type="number"
             name="precioBase"
@@ -126,7 +131,7 @@ export function ServicioFormPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Duración base (minutos)</label>
+          <Label required>Duración base (minutos)</Label>
           <input
             type="number"
             name="duracionMinutos"
@@ -140,7 +145,7 @@ export function ServicioFormPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Especialidad</label>
+          <Label required>Especialidad</Label>
           <select
             name="especialidadId"
             value={datos.especialidadId}
@@ -158,13 +163,14 @@ export function ServicioFormPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Imagen</label>
+          <Label>Imagen</Label>
           <div className="border border-white/20 rounded px-3 py-2 text-sm text-muted bg-black/40">
             Carga de imagen pendiente (el API todavía no tiene el endpoint de subida)
           </div>
         </div>
 
-        {error && <p className="text-danger text-sm">{error}</p>}
+        {error && <Alert type="danger">{error}</Alert>}
+        {exito && <Alert type="success">{exito}</Alert>}
 
         <Button type="submit" disabled={enviando}>
           {enviando ? "Guardando..." : "Guardar"}
