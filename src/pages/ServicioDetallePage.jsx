@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { obtenerServicio, cambiarEstadoServicio } from "../services/servicioService";
+import { Badge } from "../components/Badge";
+import { Button } from "../components/Button";
 
 export function ServicioDetallePage() {
   const { id } = useParams();
@@ -30,13 +32,13 @@ export function ServicioDetallePage() {
     }
   }
 
-  if (loading) return <p className="p-6">Cargando...</p>;
-  if (error) return <p className="p-6 text-red-600">{error}</p>;
+  if (loading) return <p className="p-6 text-muted">Cargando...</p>;
+  if (error) return <p className="p-6 text-danger">{error}</p>;
   if (!servicio) return null;
 
   return (
     <section className="max-w-md mx-auto p-6">
-      <h2 className="text-xl font-bold mb-4">{servicio.nombre}</h2>
+      <h2 className="text-xl font-bold mb-4 text-primary">{servicio.nombre}</h2>
 
       {servicio.imagen ? (
         <img
@@ -45,7 +47,7 @@ export function ServicioDetallePage() {
           className="w-full h-48 object-cover rounded mb-4"
         />
       ) : (
-        <div className="w-full h-48 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-sm mb-4">
+        <div className="w-full h-48 bg-black/40 rounded flex items-center justify-center text-muted text-sm mb-4">
           Sin imagen
         </div>
       )}
@@ -54,28 +56,24 @@ export function ServicioDetallePage() {
         <p><strong>Descripción:</strong> {servicio.descripcion}</p>
         <p><strong>Precio base:</strong> ₡{servicio.precioBase}</p>
         <p><strong>Duración base:</strong> {servicio.duracionMinutos} minutos</p>
-        <p>
-          <strong>Estado:</strong>{" "}
-          <span className={servicio.activo ? "text-green-700" : "text-red-700"}>
+        <p className="flex items-center gap-2">
+          <strong>Estado:</strong>
+          <Badge color={servicio.activo ? "success" : "danger"}>
             {servicio.activo ? "Activo" : "Inactivo"}
-          </span>
+          </Badge>
         </p>
       </div>
 
       <div className="flex gap-3 mt-4">
-        <Link to={`/servicios/${servicio.id}/editar`} className="bg-blue-600 text-white rounded px-3 py-2 text-sm">
-          Editar
+        <Link to={`/servicios/${servicio.id}/editar`}>
+          <Button>Editar</Button>
         </Link>
-        <button
-          onClick={handleCambiarEstado}
-          disabled={cambiando}
-          className="border rounded px-3 py-2 text-sm disabled:opacity-50"
-        >
+        <Button variant="outline" onClick={handleCambiarEstado} disabled={cambiando}>
           {servicio.activo ? "Desactivar" : "Activar"}
-        </button>
+        </Button>
         <button
           onClick={() => navigate("/servicios")}
-          className="text-sm text-gray-600"
+          className="text-sm text-muted"
         >
           Volver
         </button>

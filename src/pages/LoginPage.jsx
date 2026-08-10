@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { CampoPassword } from "../components/CampoPassword";
+import { Button } from "../components/Button";
+import { AuthCard } from "../components/AuthCard";
 
 export function LoginPage() {
   const { login } = useAuth();
@@ -28,23 +30,22 @@ export function LoginPage() {
   }
 
   return (
-    <section className="max-w-sm mx-auto p-6">
-      <h2 className="text-xl font-bold mb-4">Iniciar sesión</h2>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <AuthCard title="Iniciar sesión" subtitle="Accede a tu zona de juego">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label className="block text-sm mb-1">Correo</label>
+          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Correo</label>
           <input
             type="email"
             value={correo}
             onChange={(e) => setCorreo(e.target.value)}
             required
+            placeholder="tu@correo.com"
             className="w-full border rounded px-3 py-2"
           />
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Contraseña</label>
+          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Contraseña</label>
           <CampoPassword
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -52,20 +53,16 @@ export function LoginPage() {
           />
         </div>
 
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        {error && <p className="text-danger text-sm">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={enviando}
-          className="bg-blue-600 text-white rounded px-3 py-2 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={enviando}>
           {enviando ? "Ingresando..." : "Ingresar"}
-        </button>
+        </Button>
       </form>
 
-      <p className="text-sm mt-4">
-        ¿No tienes cuenta? <Link to="/registro" className="text-blue-600">Regístrate</Link>
+      <p className="text-sm mt-4 text-center">
+        ¿No tienes cuenta? <Link to="/registro" className="text-hover font-bold">Regístrate</Link>
       </p>
-    </section>
+    </AuthCard>
   );
 }

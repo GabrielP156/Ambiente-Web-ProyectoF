@@ -6,6 +6,7 @@ import {
   actualizarServicio,
   obtenerServicio,
 } from "../services/servicioService";
+import { Button } from "../components/Button";
 
 const datosIniciales = {
   nombre: "",
@@ -81,7 +82,7 @@ export function ServicioFormPage() {
 
   return (
     <section className="max-w-sm mx-auto p-6">
-      <h2 className="text-xl font-bold mb-4">
+      <h2 className="text-xl font-bold mb-4 text-primary">
         {esEdicion ? "Editar juego" : "Nuevo juego"}
       </h2>
 
@@ -158,20 +159,16 @@ export function ServicioFormPage() {
 
         <div>
           <label className="block text-sm mb-1">Imagen</label>
-          <div className="border rounded px-3 py-2 text-sm text-gray-400 bg-gray-50">
+          <div className="border border-white/20 rounded px-3 py-2 text-sm text-muted bg-black/40">
             Carga de imagen pendiente (el API todavía no tiene el endpoint de subida)
           </div>
         </div>
 
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        {error && <p className="text-danger text-sm">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={enviando}
-          className="bg-blue-600 text-white rounded px-3 py-2 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={enviando}>
           {enviando ? "Guardando..." : "Guardar"}
-        </button>
+        </Button>
       </form>
     </section>
   );

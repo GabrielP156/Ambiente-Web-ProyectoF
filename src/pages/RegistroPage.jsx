@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { registrarCliente } from "../services/usuarioService";
 import { CampoPassword } from "../components/CampoPassword";
+import { Button } from "../components/Button";
+import { AuthCard } from "../components/AuthCard";
 
 const datosIniciales = {
   nombre: "",
@@ -46,12 +48,10 @@ export function RegistroPage() {
   }
 
   return (
-    <section className="max-w-sm mx-auto p-6">
-      <h2 className="text-xl font-bold mb-4">Registro de cliente</h2>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <AuthCard title="Registro" subtitle="Crea tu cuenta de cliente">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label className="block text-sm mb-1">Nombre</label>
+          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Nombre</label>
           <input
             name="nombre"
             value={datos.nombre}
@@ -63,7 +63,7 @@ export function RegistroPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Primer apellido</label>
+          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Primer apellido</label>
           <input
             name="primerApellido"
             value={datos.primerApellido}
@@ -75,7 +75,7 @@ export function RegistroPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Segundo apellido</label>
+          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Segundo apellido</label>
           <input
             name="segundoApellido"
             value={datos.segundoApellido}
@@ -85,7 +85,7 @@ export function RegistroPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Correo</label>
+          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Correo</label>
           <input
             type="email"
             name="correo"
@@ -97,7 +97,7 @@ export function RegistroPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Teléfono</label>
+          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Teléfono</label>
           <input
             name="telefono"
             value={datos.telefono}
@@ -107,7 +107,7 @@ export function RegistroPage() {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Contraseña</label>
+          <label className="block text-xs uppercase tracking-wide text-muted mb-1">Contraseña</label>
           <CampoPassword
             name="password"
             value={datos.password}
@@ -117,20 +117,16 @@ export function RegistroPage() {
           />
         </div>
 
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        {error && <p className="text-danger text-sm">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={enviando}
-          className="bg-blue-600 text-white rounded px-3 py-2 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={enviando}>
           {enviando ? "Registrando..." : "Registrarme"}
-        </button>
+        </Button>
       </form>
 
-      <p className="text-sm mt-4">
-        ¿Ya tienes cuenta? <Link to="/login" className="text-blue-600">Inicia sesión</Link>
+      <p className="text-sm mt-4 text-center">
+        ¿Ya tienes cuenta? <Link to="/login" className="text-hover font-bold">Inicia sesión</Link>
       </p>
-    </section>
+    </AuthCard>
   );
 }

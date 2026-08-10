@@ -7,7 +7,7 @@ export function PerfilPage() {
 
   return (
     <section className="max-w-sm mx-auto p-6">
-      <h2 className="text-xl font-bold mb-4">Mi perfil</h2>
+      <h2 className="text-xl font-bold mb-4 text-primary">Mi perfil</h2>
 
       <div className="flex flex-col gap-2 text-sm">
         <p><strong>Nombre:</strong> {usuario.nombre} {usuario.primerApellido} {usuario.segundoApellido}</p>

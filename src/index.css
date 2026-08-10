@@ -1,5 +1,35 @@
 @import "tailwindcss";
+@import "./theme.css";
 
 body {
   margin: 0;
+  min-height: 100vh;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(600px circle at 15% 15%, rgba(188, 19, 254, 0.18), transparent 60%),
+    radial-gradient(600px circle at 85% 25%, rgba(255, 16, 240, 0.14), transparent 60%),
+    radial-gradient(500px circle at 50% 90%, rgba(0, 255, 255, 0.1), transparent 60%);
+  background-attachment: fixed;
+}
+
+input,
+select,
+textarea {
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--color-text);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-muted);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent);
 }
