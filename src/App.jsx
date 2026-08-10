@@ -19,7 +19,14 @@ export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={
+            <RutaProtegida>
+              <HomePage />
+            </RutaProtegida>
+          }
+        />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registro" element={<RegistroPage />} />
         <Route
@@ -30,8 +37,22 @@ export default function App() {
             </RutaProtegida>
           }
         />
-        <Route path="/servicios" element={<ServiciosListPage />} />
-        <Route path="/servicios/:id" element={<ServicioDetallePage />} />
+        <Route
+          path="/servicios"
+          element={
+            <RutaProtegida>
+              <ServiciosListPage />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/servicios/:id"
+          element={
+            <RutaProtegida>
+              <ServicioDetallePage />
+            </RutaProtegida>
+          }
+        />
         <Route
           path="/servicios/nuevo"
           element={

@@ -25,7 +25,7 @@ export function Layout() {
         </Link>
 
         <nav className="flex items-center gap-6 text-sm">
-          <NavLink to="/servicios" className={linkClase}>Juegos</NavLink>
+          {usuario && <NavLink to="/servicios" className={linkClase}>Juegos</NavLink>}
           {esStaff && <NavLink to="/empleados" className={linkClase}>Encargados</NavLink>}
           {esStaff && <NavLink to="/restricciones" className={linkClase}>Restricciones</NavLink>}
           {usuario && <NavLink to="/perfil" className={linkClase}>Mi perfil</NavLink>}
@@ -35,10 +35,7 @@ export function Layout() {
               Cerrar sesión
             </button>
           ) : (
-            <>
-              <NavLink to="/login" className={linkClase}>Iniciar sesión</NavLink>
-              <NavLink to="/registro" className={linkClase}>Registrarme</NavLink>
-            </>
+            <NavLink to="/login" className={linkClase}>Iniciar sesión</NavLink>
           )}
         </nav>
       </header>
